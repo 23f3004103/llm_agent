@@ -264,33 +264,4 @@ userForm.onsubmit = async (e) => {
 (async () => {
   await ensureAipipeAuth();
   addMessage('agent', 'Hello! How can I help you today?');
-  // Mobile helpers: wire toolbar if present
-  try {
-    const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
-    if (isMobile) {
-      const mbConvo = document.getElementById('mb-toggle-convo');
-      const mbModel = document.getElementById('mb-model-picker');
-      const mbFocus = document.getElementById('mb-focus-input');
-      if (mbConvo) mbConvo.addEventListener('click', () => {
-        const convo = document.getElementById('conversation');
-        convo.style.display = convo.style.display === 'none' ? 'block' : 'none';
-      });
-      if (mbModel) mbModel.addEventListener('click', () => {
-        // try to open model picker UI if provided by bootstrap-llm-provider
-        if (window.LLMProviderPicker && window.LLMProviderPicker.open) {
-          window.LLMProviderPicker.open();
-        } else {
-          // fallback: focus the model select
-          const sel = document.getElementById('model');
-          if (sel) sel.focus();
-        }
-      });
-      if (mbFocus) mbFocus.addEventListener('click', () => {
-        const inp = document.getElementById('user-input');
-        if (inp) inp.focus();
-      });
-    }
-  } catch (e) {
-    // ignore mobile wiring errors
-  }
 })();
